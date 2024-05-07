@@ -10,6 +10,7 @@ export default function PlateControls() {
 
   const handleSizeChange = (e) => {
     const size = JSON.parse(e.target.value);
+
     plate.setPlateSize(size);
   };
 

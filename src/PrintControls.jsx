@@ -9,41 +9,89 @@ export default function PrintControls({ printElementRef }) {
 
   const handlePrint = useReactToPrint({
     content: () => {
-      const printElem = document.createElement("div");
+      let printElem = document.createElement("div");
+      // const borderDiv = document.createElement("div");
+      // borderDiv.style["border"] = `2px solid black`;
+      // borderDiv.style["padding"] = "5px";
+      // borderDiv.style["height"] = `100%`;
+      // borderDiv.style["width"] = `100%`;
+      // borderDiv.style["borderRadius"] = "8mm";
+
+      const height = plate.plateSize.height;
+      const width = plate.plateSize.width;
+
       printElem.classList.add(
-        "w-full",
-        "h-full",
         "flex",
+        "flex-col",
         "items-center",
         "justify-center",
-        "flex-col"
+        "w-full",
+        "h-full"
       );
 
+      // if print pair
       if (isPrintPair) {
         const containerFront = document
           .getElementById("container-front")
-          .cloneNode(true);
-        const frontNestedDiv = containerFront.querySelector("div > div");
-        frontNestedDiv.style.outline = "none";
-        containerFront.classList.add("no-border");
+          .cloneNode(true).firstElementChild.firstElementChild;
+        containerFront.style["width"] = `100%`;
+        containerFront.style["height"] = `100%`;
+        containerFront.style["scale"] = 0.97;
+        //
+        const firstSection = document.createElement("section");
+        firstSection.classList.add("flex", "items-center", "justify-center");
+        firstSection.style["width"] = `${width}mm`;
+        firstSection.style["height"] = `${height}mm`;
+        firstSection.style["padding"] = `10px`;
+        firstSection.style["position"] = "relative";
 
+        // const borderFront = borderDiv.cloneNode(true);
+        // borderFront.appendChild(containerFront);
+        firstSection.appendChild(containerFront);
+        printElem.appendChild(firstSection);
+        //
+        //
         const containerRear = document
           .getElementById("container-rear")
-          .cloneNode(true);
-        const backNestedDiv = containerRear.querySelector("div > div");
-        backNestedDiv.style.outline = "none";
-        containerFront.classList.add("no-border");
+          .cloneNode(true).firstElementChild.firstElementChild;
+        containerRear.style["width"] = `100%`;
+        containerRear.style["height"] = `100%`;
+        containerRear.style["scale"] = 0.97;
+        //
+        const secondSection = document.createElement("section");
+        secondSection.classList.add("flex", "items-center", "justify-center");
+        secondSection.style["width"] = `${width}mm`;
+        secondSection.style["height"] = `${height}mm`;
+        secondSection.style["padding"] = `10px`;
+        secondSection.style["position"] = "relative";
+        secondSection.style["backgroundColor"] = `rgb(234, 179, 8)`;
 
-        printElem.appendChild(containerFront);
-        printElem.appendChild(containerRear);
+        // const borderRear = borderDiv.cloneNode(true);
+        // borderRear.appendChild(containerRear);
+        secondSection.appendChild(containerRear);
+        printElem.appendChild(secondSection);
+        //
         return printElem;
       }
-      const clonedNode = printElementRef.current.cloneNode(true);
-      const nestedDiv = clonedNode.querySelector("div > div");
-      nestedDiv.style.outline = "none";
 
-      clonedNode.classList.add("no-border");
-      printElem.appendChild(clonedNode);
+      const section = document.createElement("section");
+      section.classList.add("flex", "items-center", "justify-center");
+      section.style["width"] = `${width}mm`;
+      section.style["height"] = `${height}mm`;
+      section.style["padding"] = `5px`;
+      section.style["position"] = "relative";
+
+      const articleNode =
+        printElementRef.current.cloneNode(true).firstElementChild
+          .firstElementChild;
+      articleNode.style["width"] = `100%`;
+      articleNode.style["height"] = `100%`;
+      articleNode.style["scale"] = 0.97;
+
+      // borderDiv.appendChild(articleNode);
+      // section.appendChild(borderDiv);
+      section.appendChild(articleNode);
+      printElem.appendChild(section);
       return printElem;
     },
   });

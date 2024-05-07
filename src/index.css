@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "CustomFont";
+  src: url("./font/font.ttf") format("truetype");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,6 +12,10 @@
 }
 .no-border * {
   border: none !important;
+}
+
+.custom-font {
+  font-family: "CustomFont", "Times New Roman", Times, serif;
 }
 
 @layer base {
@@ -67,4 +76,16 @@
   button {
     @apply !bg-gray-800;
   }
+}
+
+.scale-200 {
+  scale: 3;
+}
+
+.rotate-90 {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
